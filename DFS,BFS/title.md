@@ -12,6 +12,8 @@
 from collections import dequeue
 
 queue = dequeue()
+(push : append)
+(pop : popleft)
 ```
 
 ## 재귀함수
@@ -40,5 +42,15 @@ queue = dequeue()
 - Depth First Search
 - 깊이 우선 탐색
 - 그래프를 탐색하는데 깊이를 우선으로 탐색함
+- 최대한 멀리있는 노드부터 탐색
 - 스택 자료구조에 기초하므로 간단하게 구현 가능
+- 스택을 이용하므로 재귀함수로 간단하게 구현 가능
+
+## BFS
+- Breadth First Search
+- 너비 우선 탐색
+- 그래프를 탐색하는데 가까운 녀석들을 먼저 탐색함(인접 노드들을 먼저 탐색)
+- DFS는 최대한 멀리있는 노드부터 탐색하는 반면 BFS는 가까운 노드들부터 탐색
+- **큐** 자료구조를 이용하는 것이 정석
+- collections라이브러리의 `deque`를 이용하자
 

@@ -16,17 +16,23 @@ visited = [False] * 9
 
 def bfs(graph, start, visited):
   visited[start] = True
-
   queue = deque([start])
-  # 큐 초기화 하는법(deque 라이브러리를 사용해서..)
 
   while queue:
     v = queue.popleft()
     print(v, end=' ')
-
     for i in graph[v]:
       if visited[i] == False:
-        queue.append(i)
         visited[i] = True
+        queue.append(i)
 
 bfs(graph, 1, visited)
+
+# 너비우선 탐색
+# 가까운 노드부터 방문
+# 가중치없는 간선..인 그래프 에서 최단경로를 묻는 문제로 자주나옴
+# 최단경로인 이유는 가장 가까운 노드들부터 탐색하기때문
+# dfs는 가장 먼 노드들부터 탐색하므로 최단경로로는 적절치 못하다
+# 자료구조 queue를 이용
+# 방문처리 append
+# 방문하면 popleft를한다
