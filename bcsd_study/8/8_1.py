@@ -13,4 +13,11 @@ tree = []
 for _ in range(N):
   tree.append(list(input().split()))
 
-print(tree)
+visited = []
+def front(tree):
+  first = start[0] 
+  second = frstart[1]
+  third = start[2]
+
+  visited.append(first)
+
