@@ -7,12 +7,12 @@ graph = []
 for _ in range(N):
   graph.append(list(map(int, input().split())))
 
-익은토마토들 = []
+tomatoes = []
 
 for i in range(N):
   for j in range(M):
     if graph[i][j] == 1:
-      익은토마토들.append(deque([[i, j]]))
+      tomatoes.append(deque([[i, j]]))
       # 탐색을 시작할 노드들
       # 큐를 집어넣음
 
@@ -46,7 +46,7 @@ def bfs(tomatoes):
           queue.append([nx, ny])
           graph[nx][ny] = graph[currentPosX][currentPosY] + 1
           day = graph[nx][ny]
-
+    # print(queue)
     # 토마토 익는 상황 그래프로 출력
     # print('--------------')
     # for i in range(N):
@@ -68,7 +68,7 @@ for i in range(N):
 if start == False:
   print(0)
 else:
-  result = bfs(익은토마토들) - 1
+  result = bfs(tomatoes) - 1
   # 최소 일수
   flag = False
   for i in range(N):
