@@ -8,20 +8,27 @@ nums = list(map(int, sys.stdin.readline().rstrip().split()))
 
 cards.sort()
 
-def bs(target):
+def lower_bound(target):
   start = 0
-  end = len(cards) - 1
-  sum = 0
-  while start <= end:
+  end = len(cards)
+  while start < end:
     mid = (start + end) // 2
-    if cards[mid] == target:
-      
-
-    elif cards[mid] > target:
-      end = mid - 1
-    else:
+    if target > cards[mid]:
       start = mid + 1
-  return sum 
+    else:
+      end = mid
+  return end + 1
+
+def upper_bound(target):
+  start = 0
+  end = len(cards)
+  while start < end:
+    mid = (start + end) // 2
+    if target >= cards[mid]:
+      start = mid + 1
+    else: end = mid
+
+  return end + 1
 
 for num in nums:
-  print(bs(num), end=' ')
+  print(upper_bound(num) - lower_bound(num), end=' ')
