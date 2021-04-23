@@ -26,7 +26,7 @@ def dfs(answer, tmp, cases):
     tmp.pop()
 
 dfs(answer, tmp, cases)
-
+# print("완료")
 for i in cases:
   for j in i:
     print(j, end=' ')
