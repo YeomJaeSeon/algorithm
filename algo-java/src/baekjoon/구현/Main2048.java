@@ -21,42 +21,42 @@ public class Main2048 {
         }
         // 상하좌우를 총 다섯번 4 * 4 * 4 * 4 * 4
         // 0 : 상, 1 : 하, 2 : 좌, 3: 우
-//        for(int i1 = 0; i1 < 4; i1++){
-//            for(int i2 = 0; i2 < 4; i2++){
-//                for(int i3 = 0; i3 < 4; i3++){
-//                    for(int i4 = 0; i4 < 4; i4++){
-//                        for(int i5 = 0; i5 < 4; i5++){
-//                            int[][] newBoard = new int[board.length][board.length];
-//                            for(int i = 0; i < board.length; i++){
-//                                for(int j = 0; j < board.length; j++){
-//                                    newBoard[i][j] = board[i][j];
-//                                }
-//                            }
-//
-//                            resultBoard(newBoard, i1);
-//                            resultBoard(newBoard, i2);
-//                            resultBoard(newBoard, i3);
-//                            resultBoard(newBoard, i4);
-//                            resultBoard(newBoard, i5);
-//
-//
-//                            for(int i = 0; i < newBoard.length; i++){
-//                                for(int j = 0; j < newBoard.length; j++){
-//                                    if(max < newBoard[i][j]){
-//                                        max = newBoard[i][j];
-//                                    }
-//                                }
-//                            }
+        for(int i1 = 0; i1 < 4; i1++){
+            for(int i2 = 0; i2 < 4; i2++){
+                for(int i3 = 0; i3 < 4; i3++){
+                    for(int i4 = 0; i4 < 4; i4++){
+                        for(int i5 = 0; i5 < 4; i5++){
+                            int[][] newBoard = new int[board.length][board.length];
+                            for(int i = 0; i < board.length; i++){
+                                for(int j = 0; j < board.length; j++){
+                                    newBoard[i][j] = board[i][j];
+                                }
+                            }
+
+                            resultBoard(newBoard, i1);
+                            resultBoard(newBoard, i2);
+                            resultBoard(newBoard, i3);
+                            resultBoard(newBoard, i4);
+                            resultBoard(newBoard, i5);
+
+
+                            for(int i = 0; i < newBoard.length; i++){
+                                for(int j = 0; j < newBoard.length; j++){
+                                    if(max < newBoard[i][j]){
+                                        max = newBoard[i][j];
+                                    }
+                                }
+                            }
 //                            System.out.printf("%d %d %d %d %d%n", i1, i2, i3, i4, i5);
 //                            System.out.println("Arrays.deepToString(newBoard) = " + Arrays.deepToString(newBoard));
-//                        }
-//                    }
-//                }
-//            }
-//        }
-        resultBoard(board, 2);
-        resultBoard(board, 3);
-        System.out.println("Arrays.deepToString(newBoard) = " + Arrays.deepToString(board));
+                        }
+                    }
+                }
+            }
+        }
+//        resultBoard(board, 2);
+//        resultBoard(board, 3);
+//        System.out.println("Arrays.deepToString(newBoard) = " + Arrays.deepToString(board));
 
         System.out.println(max);
 
@@ -68,6 +68,9 @@ public class Main2048 {
                         // 위
                     case 0:
                         moveToZero(newBoard, num);
+//                        for(int k = 0; k < newBoard.length - 1; k++){
+//                            if(newBoard[k])
+//                        }
                         i = newBoard.length - i - 1;
 //                        j = newBoard.length - j - 1;
                         if(i == 0) break;
@@ -131,19 +134,34 @@ public class Main2048 {
     }
     public static void moveToZero(int[][] board, int num){
         if(num == 0) {
-            for (int i = 1; i < board.length; i++) {
+            for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board.length; j++) {
-                    if(board[i - 1][j] == 0){
-                        int k = i;
-                        while(board[k][j] != 0){
+                    if(board[j][i] == 0){
+                        if(j == board.length - 1) break;
+                        int k = j + 1;
+                        while(board[k][i] == 0){
                             ++k;
                             if(k == board.length) break;
                         }
                         if(k != board.length) {
-                            board[i - 1][j] = board[k][j];
-                            board[k][j] = 0;
+                            board[j][i] = board[k][i];
+                            board[k][i] = 0;
                         }
+//                        board[i][j - 1] = board[i][j];
+//                        board[i][j] = 0;
                     }
+                    //
+//                    if(board[i - 1][j] == 0){
+//                        int k = i;
+//                        while(board[k][j] != 0){
+//                            ++k;
+//                            if(k == board.length) break;
+//                        }
+//                        if(k != board.length) {
+//                            board[i - 1][j] = board[k][j];
+//                            board[k][j] = 0;
+//                        }
+//                    }
 //                    while(board[i - 1][j] != 0){
 //                        board[i - 1][j] = board[i][j];
 //                        board[i][j] = 0;
@@ -153,19 +171,19 @@ public class Main2048 {
         }
         else if(num == 1){
             for (int i = 0; i < board.length - 1; i++) {
-                for (int j = 0; j < board.length; j++) {
-                    if(board[i + 1][j] == 0){
-                        int k = i;
-                        while(board[k][j] != 0){
+                for (int j = board.length - 1; j >= 0; j--) {
+                    if(board[j][i] == 0){
+                        if(j == 0) break;
+                        int k = j - 1;
+                        while(board[k][i] == 0){
                             --k;
-                            if(k == -1)  break;
+                            if(k == -1) break;
                         }
                         if(k != -1) {
-                            board[i + 1][j] = board[k][j];
-                            board[k][j] = 0;
+                            board[j][i] = board[k][i];
+                            board[k][i] = 0;
                         }
-
-//                        board[i + 1][j] = board[i][j];
+//                        board[i][j + 1] = board[i][j];
 //                        board[i][j] = 0;
                     }
 //                    while(board[i + 1][j] != 0){
