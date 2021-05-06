@@ -34,6 +34,9 @@ public class Main1062 {
                 list.add(set);
             }
 
+            System.out.println("list = " + list);
+            System.out.println("allWords = " + allWords);
+
             int wordNum = K - 5;
             // allWords중 wordNum 의 조합 을 구해야함 일단.
             // 그러기위해선 Set이아닌 List로 살짞 변환해준다.

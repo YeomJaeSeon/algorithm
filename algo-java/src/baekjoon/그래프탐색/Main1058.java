@@ -10,7 +10,7 @@ public class Main1058 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
         char[][] graph = new char[N][N];
-        boolean[] visited = new boolean[N + 1];
+
         int max = 0;
 
         for(int i = 0; i < N; i++){
