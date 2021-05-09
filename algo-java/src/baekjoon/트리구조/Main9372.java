@@ -41,6 +41,9 @@ public class Main9372 {
                 if(inputArr[j][1] == i) list[i].add(inputArr[j][0]);
             }
         }
+
+        System.out.println(Arrays.toString(list));
+
         cnt = 0;
         dfs(1, visited, list);
         System.out.println(cnt);
