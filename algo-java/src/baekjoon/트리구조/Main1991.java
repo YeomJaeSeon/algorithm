@@ -10,35 +10,97 @@ import java.util.*;
 // 중위 inOrder -> 좌자식, 루트, 우자식
 // 후위 postOrder -> 좌자식, 우자식, 루트
 public class Main1991 {
-    public static char[][] tree;
-    public static boolean[] visited;
+    static List<Node> nodes;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-
-        tree = new char[N][3];
-        visited = new boolean[N];
-
-        for (int i = 0; i < N; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-            tree[i][0] = st.nextToken().charAt(0);
-            tree[i][1] = st.nextToken().charAt(0);
-            tree[i][2] = st.nextToken().charAt(0);
+        String[] stringArr = new String[N];
+        nodes = new ArrayList<>(N);
+        for(int i = 0; i < N; i++){
+            stringArr[i] = br.readLine();
+            nodes.add(new Node(String.valueOf(stringArr[i].charAt(0))));
         }
-        // 0 -> 1 -> 2
-        preOrder(0, tree[0]);
+        // 각노드 다 만들고
+
+        for(int i = 0; i < N; i++){
+            StringTokenizer st = new StringTokenizer(stringArr[i], " ");
+            String value = st.nextToken();
+            String leftNodeValue = st.nextToken();
+            String rightNodeValue = st.nextToken();
+            Node selectedNode = nodes.get(i);
+
+            for (Node node : nodes) {
+                if(node.equals(leftNodeValue)){
+                    selectedNode.leftNode = node;
+                }
+                if(node.equals(rightNodeValue)){
+                    selectedNode.rightNode = node;
+                }
+            }
+        }
+        // 노드 완성
+
+        preOrder(nodes.get(0));
+        System.out.println();
+        inOrder(nodes.get(0));
+        System.out.println();
+        postOrder(nodes.get(0));
+
     }
-    public static void preOrder(int nodeNum, char[] node){
-        char root = node[0];
-        char left = node[1];
-        char right = node[2];
-        System.out.print(root);
-        visited[nodeNum] = true;
-        for(int i = 0; i < tree.length; i++){
-            if(tree[i][1] == root && !visited[i]) preOrder(i, tree[i]);
+    public static void preOrder(Node node){
+        System.out.print(node);
+        if(node.leftNode != null)
+            preOrder(node.leftNode);
+        if(node.rightNode != null){
+            preOrder(node.rightNode);
         }
-        for(int i = 0; i < tree.length; i++){
-            if(tree[i][2] == root && !visited[i]) preOrder(i, tree[i]);
+    }
+    public static void inOrder(Node node){
+        if(node.leftNode != null){
+            inOrder(node.leftNode);
         }
+        System.out.print(node);
+        if(node.rightNode != null){
+            inOrder(node.rightNode);
+        }
+    }
+    public static void postOrder(Node node){
+        if(node.leftNode != null){
+            postOrder(node.leftNode);
+        }
+        if(node.rightNode != null){
+            postOrder(node.rightNode);
+        }
+        System.out.print(node);
+    }
+
+}
+class Node{
+    String value;
+    Node leftNode;
+    Node rightNode;
+
+    Node(String value){
+        this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof String){
+            return ((String)obj).equals(this.value);
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return value;
     }
 }
+
+/**
+ 풀이
+ leftNode와 rightNode가 멤버인 Node객체를 만들어 ArrayList에 해당 객체를 모두 집어넣고
+ 각각의 트리순회를 재귀함수로 구현함
+ **/
