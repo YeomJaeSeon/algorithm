@@ -1,4 +1,4 @@
-package baekjoon.구현;
+package baekjoon.시뮬레이션;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -166,6 +166,7 @@ public class Main17822 {
                 if(graph[value[0]][value[1]] == graph[value[0]][1]) {
                     isChange = true;
                     if(!visited[value[0]][1])q.offer(new int[]{value[0], 1});
+
                 }
             }
 

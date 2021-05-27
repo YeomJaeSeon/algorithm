@@ -27,12 +27,12 @@ public class Main14719 {
             }
         }
 
-//        for(int i = 0; i < H; i++){
-//            for(int j = 0; j < W; j++){
-//                System.out.print(graph[i][j] +" ");
-//            }
-//            System.out.println();
-//        }
+        for(int i = 0; i < H; i++){
+            for(int j = 0; j < W; j++){
+                System.out.print(graph[i][j] +" ");
+            }
+            System.out.println();
+        }
 
         boolean isStart = false;
         //isStart로 왼쪽에 1이있는지
