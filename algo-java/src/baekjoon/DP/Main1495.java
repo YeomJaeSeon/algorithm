@@ -18,7 +18,7 @@ public class Main1495 {
         // N, S, M
         N = Integer.parseInt(st.nextToken()); // 곡개수
         S = Integer.parseInt(st.nextToken()); // 시작볼륨
-        M = Integer.parseInt(st.nextToken()); // ~ M까지 볼륨키울수있음
+        M = Integer.parseInt(st.nextToken()); // ~ M까지 볼륨키울수있음 - 0 ~ M
 
         a = new int[N + 1];
         d = new int[N + 1][2];
@@ -51,3 +51,9 @@ public class Main1495 {
 
     }
 }
+
+/**
+ N * 2 의 dp테이블로 더했을때, 뺼떄의 각각 최대값만 저장햇는데
+ 반례가 존재함..
+ N * M테이블로 만들어서 dp테이블만듬
+ **/
