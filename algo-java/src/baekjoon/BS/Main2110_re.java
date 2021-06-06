@@ -22,11 +22,7 @@ public class Main2110_re {
             homes[i] = Integer.parseInt(br.readLine());
         }
 
-        int diff = 1;
-        while(true){
-            for(int i = 0; i < N; i++){
-            }
-        }
+
 
     }
 }
@@ -35,4 +31,9 @@ public class Main2110_re {
  x이상일수있나?
  x이상일수 없나?
  이진탐색..
+ **/
+
+
+/**
+ 파라메트릭 서치 : 결정문제로 해결 - 결정한느데 탐색하는데 이진탐색을 이용
  **/
