@@ -1,10 +1,10 @@
-package baekjoon.BS;
+package baekjoon.re.BS;
 
 import java.io.*;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Main2110_re {
+public class Main2110 {
     static int N, C;
     static int[] homes;
     static int answer;
