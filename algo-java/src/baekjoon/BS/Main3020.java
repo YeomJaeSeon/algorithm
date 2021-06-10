@@ -11,7 +11,6 @@ public class Main3020 {
     static Integer[] topObs; // 종유석
     static int min = (int)1e9;
 
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
