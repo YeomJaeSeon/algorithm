@@ -33,6 +33,13 @@ public class Main1600 {
 
         bfs(0, 0);
 
+        for(int i = 0; i < H; i++){
+            for(int j = 0; j < W; j++){
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
+
         int result = board[H - 1][W - 1];
         if(result > 0){
             System.out.println(--result);
@@ -46,7 +53,6 @@ public class Main1600 {
         q.offer(new int[]{x, y});
         board[x][y] = 1;
 
-        outer:
         while(!q.isEmpty()){
             int[] poll = q.poll();
             int cx = poll[0];
