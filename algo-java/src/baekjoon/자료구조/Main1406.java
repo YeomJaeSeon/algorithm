@@ -1,4 +1,4 @@
-package baekjoon.그래프탐색;
+package baekjoon.자료구조;
 
 import java.io.BufferedReader;
 import java.io.IOException;
