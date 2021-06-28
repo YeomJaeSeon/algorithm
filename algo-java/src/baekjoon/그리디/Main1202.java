@@ -22,9 +22,20 @@ class Diamond implements Comparable<Diamond>{
         return V;
     }
 
+    public void setM(int m) {
+        M = m;
+    }
+
+    public void setV(int v) {
+        V = v;
+    }
+
     @Override
     public int compareTo(Diamond o) {
-        return o.V - V;
+        if(M == o.M){
+            return o.V - V;
+        }
+        return M - o.M;
     }
 
     @Override
@@ -38,12 +49,13 @@ public class Main1202 {
     //보석
     static List<Diamond> list = new ArrayList<>(300001);
     static int[] bags;
+    static PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         N = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
-        int sum = 0;
+        long sum = 0;
 
         for(int i = 0; i < N; i++){
             StringTokenizer st2 = new StringTokenizer(br.readLine(), " ");
@@ -59,16 +71,18 @@ public class Main1202 {
             bags[i] = Integer.parseInt(br.readLine());
         }
 
-        for(int i = 0; i < list.size(); i++){
-            for(int j = 0; j < bags.length; j++){
-                if(bags[j] == -1) continue;
-                if(bags[j] >= list.get(i).getM()){
-                    sum += list.get(i).getV();
-                    bags[j] = -1;
-                    break;
-                }
+        Arrays.sort(bags);
+
+        for(int i = 0, j = 0; i < K; i++){
+            while(j < N && list.get(j).getM() <= bags[i]){
+                pq.offer(list.get(j++).getV());
+            }
+            if(!pq.isEmpty()){
+                sum += pq.poll();
             }
         }
+
+
         System.out.println(sum);
     }
 }
