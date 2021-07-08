@@ -12,6 +12,7 @@ public class Main7785 {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         N = Integer.parseInt(br.readLine());
+
         for(int i = 0; i < N; i++){
             StringTokenizer st = new StringTokenizer(br.readLine(), " ");
             String name = st.nextToken();
@@ -56,5 +57,4 @@ public class Main7785 {
  해싱이란 어떠한key를 해쉬함수에 넣으면 hashCode()반환값이나오고
  이 해쉬코드가 해쉬테이블(배열 + 링크드리스트)의 위치값을 가지고있음
  배열의 index로 접근 + LinkedList로 추가나 삭제로 엄청빠르다
-
  **/

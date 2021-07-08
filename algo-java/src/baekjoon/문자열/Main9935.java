@@ -26,6 +26,7 @@ public class Main9935 {
                 }
             }
         }
+
         if(stack.isEmpty()){
             System.out.println("FRULA");
         }else{
@@ -55,7 +56,6 @@ public class Main9935 {
             }
         }
     }
-
 }
 
 /**
