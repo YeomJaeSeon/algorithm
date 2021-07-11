@@ -39,15 +39,12 @@ public class Main10994 {
             board[start + i][v - 1 - start] = '*';
         }
 
-
-
-
         displayStar(start + 2, n - 4, v);
     }
 }
 
 /**
  재귀함수를 이용한 별찍기
- 
+
  2차원 배열을 이용해서 별을찍었음.
  **/
