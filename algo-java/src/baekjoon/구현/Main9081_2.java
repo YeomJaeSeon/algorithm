@@ -24,38 +24,38 @@ public class Main9081_2 {
             int idx = -1;
             int idx2= -1;
 
-            outer:
-            for(int j = original.length() - 1; j >= 1; j--){
-                for(int k = j - 1; k >= 0; k--){
-                    if(intArr[j] > intArr[k]){
-                        //감소하는 부분 찾기
-                        idx = k;
-                        idx2 = j;
-                        break outer;
-                    }
+            for (int j = intArr.length - 1; j >= 1; j--) {
+                if (intArr[j] > intArr[j - 1]) {
+                    idx = j - 1; // 증가하지않는 idx찾기
+                    break;
                 }
             }
+
             if(idx == -1){
                 bw.write(original+"\n");
             }else{
+
+                int num = intArr[idx];
+                for(int j = intArr.length - 1; j >= 0; j--){
+                    if(num < intArr[j]){
+                        idx2 = j; // idx의 수보다 큰 수의 위치를 저장
+                        break;
+                    }
+                }
+
                 int tmp = intArr[idx];
                 intArr[idx] = intArr[idx2];
                 intArr[idx2] = tmp;
+                // 위치 바꾸기
 
-                int[] subArr = new int[intArr.length - 1 - idx];
+                Arrays.sort(intArr, idx + 1, intArr.length);
+                // 증가하지않는 위치의 바로 뒤쪽은 전부 정렬
 
-                for(int j = idx + 1; j < intArr.length; j++){
-                    subArr[j - (idx + 1)] = intArr[j];
+                StringBuilder sb = new StringBuilder();
+                for (int v : intArr) {
+                    sb.append((char)(v + 65));
                 }
-                Arrays.sort(subArr);
-                for(int j = idx + 1; j < intArr.length; j++){
-                    intArr[j] = subArr[j - (idx + 1)];
-                }
-
-                for(int j = 0; j < intArr.length; j++){
-                    bw.write((char)(intArr[j] + 65));
-                }
-                bw.write("\n");
+                bw.write(sb.toString()+"\n");
             }
         }
 
@@ -63,3 +63,17 @@ public class Main9081_2 {
         bw.close();
     }
 }
+
+/**
+ 바로 다음 순열을 찾는문제
+
+ 틀린이유
+ 1. 백트래킹으로 풀려함 - 입력되는 문자열의 길이가 99일수도있음 . 시간초과
+
+ 풀이
+ 바로 다음순열을 찾는 로직이 존재하여 해당 로직을 이용해서풀면됨
+ 1. 뒤에서부터 증가하지않는 첫번째 위치를 찾는다.
+ 2. 또 다시 뒤에서부터 1에서 찾은 idx의 원소보다 큰 첫번째 위치를 찾는다
+ 3. 두 위치의 값을 서로 바꾸고 1에서 찾은 증가하지않는 첫번째 idx + 1 부터는 전부 사전순으로 정렬을 한다.
+
+ **/
