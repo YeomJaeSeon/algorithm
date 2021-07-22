@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-//N개 센서중 K개 집중국 만들수있음
-//
 public class Main2212 {
     static int N, K;
     static List<Integer> list = new ArrayList<>();
@@ -58,5 +56,5 @@ public class Main2212 {
  * 그래서 바로 센서의 좌표를 오름차순정렬하고 옆좌표끼리의 차를 다시 diffList라는 ArrayList에 저장함
  * 왜냐면 그중 가장 차이가 큰 K - 1개를 빼야 수신가능한 영역의 합이 최소이므로
  *
- * 직접 여러 예제를 손으로 써가닌까 금방풀림
- */
+ * 직접 여러 예제를 손으로 써가닌까 금방풀림림
+*/
