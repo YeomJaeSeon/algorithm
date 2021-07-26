@@ -34,28 +34,30 @@ public class Main12852 {
 
         for(int i = 2; i <= N; i++){
             d[i] = d[i - 1] + 1;
+            boolean isDivided1 = false;
+            boolean isDivided2 = false;
 
-            if(i % 3 == 0){
-                if(d[i] > d[i / 3] + 1){
-                    for (Integer v : list.get(i / 3)) {
-                        list.get(i).add(v);
-                    }
-                    d[i] = d[i / 3] + 1;
-                }else{
-                    for (Integer v : list.get(i - 1)) {
-                        list.get(i).add(v);
-                    }
+            if(i % 3 == 0 && d[i] > d[i / 3] + 1){
+                isDivided1 = true;
+                d[i] = d[i / 3] + 1;
+
+            }
+            if(i % 2 == 0 && d[i] > d[i / 2] + 1){
+                isDivided2 = true;
+                d[i] = d[i / 2] + 1;
+
+            }
+            if(isDivided2 && !isDivided1){
+                for (Integer v : list.get(i / 2)) {
+                    list.get(i).add(v);
                 }
-            }else if(N % 2 == 0){
-                if(d[i] > d[i / 2] + 1){
-                    for (Integer v : list.get(i / 2)) {
-                        list.get(i).add(v);
-                    }
-                    d[i] = d[i / 2] + 1;
-                }else{
-                    for (Integer v : list.get(i - 1)) {
-                        list.get(i).add(v);
-                    }
+            }else if(isDivided1 && !isDivided2){
+                for (Integer v : list.get(i / 3)) {
+                    list.get(i).add(v);
+                }
+            }else if(!isDivided1 && !isDivided2){
+                for (Integer v : list.get(i - 1)) {
+                    list.get(i).add(v);
                 }
             }
             list.get(i).add(i); // 결과도 넣어야함.
