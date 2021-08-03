@@ -6,65 +6,76 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main1092 {
-    static List<Integer> list = new ArrayList<>();
     static int N, M;
-    static List<Integer> krein = new ArrayList<>();
+    static List<Integer> kreins = new ArrayList<>();
     static List<Integer> boxes = new ArrayList<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         for(int i = 0; i < N; i++){
-            krein.add(Integer.parseInt(st.nextToken()));
+            kreins.add(Integer.parseInt(st.nextToken()));
         }
-        Collections.sort(krein); // 오름차순 정렬
-
         M = Integer.parseInt(br.readLine());
-        st = new StringTokenizer(br.readLine());
+        st = new StringTokenizer(br.readLine(), " ");
         for(int i = 0; i < M; i++){
-           boxes.add(Integer.parseInt(st.nextToken()));
+            boxes.add(Integer.parseInt(st.nextToken()));
         }
+        Collections.sort(kreins);
         Collections.sort(boxes);
 
-        if(boxes.get(M - 1) > krein.get(N - 1)){
+        if(kreins.get(N - 1) < boxes.get(M - 1)){
             System.out.println(-1);
         }else{
-            System.out.println(calculateTime());
+            System.out.println(calculateTime(makeLiftArr()));
         }
-    }
-    static int calculateTime(){
-        for(int i = 0; i < N; i++){
-            int count = 0;
-            for(int j = 0; j < M; j++){
-                if(krein.get(i) >= boxes.get(j)){
-                    count++;
-                }else break;
-            }
-            list.add(count);
-        }
-        System.out.println(list);
 
-        int result = 0;
+    }
+    static int[] makeLiftArr(){
+        int[] arr = new int[N];
+        for(int i = 0; i < kreins.size(); i++){
+            if(i > 0){
+                arr[i] = upperBound(kreins.get(i)) - upperBound(kreins.get(i - 1));
+            }else{
+                arr[i] = upperBound(kreins.get(i));
+            }
+        }
+        return arr;
+    }
+    static int calculateTime(int[] arr){
+        int sum = Arrays.stream(arr).sum();
         int time = 0;
-        outer:
-        while(list.get(N - 2) > 0){
-            for(int i = time; i < N; i++){
-                if(list.get(i) > 0){
-                    int v = list.get(i) - 1;
-                    list.set(i, v);
-                    if(time + 1 != N && list.get(N - 2) == 0){
-                        result++;
-                        break outer;
+        while(sum > 0){
+            for(int i = 0; i < arr.length; i++){
+                if(arr[i] != 0){
+                    arr[i]--;
+                    sum--;
+                }else{
+                    for(int j = i; j >= 0; j--){
+                        if(arr[j] != 0){
+                            arr[j]--;
+                            sum--;
+                            break; // 보다 작은 크레인 에서 박스를 하나 뺏어온뒤 바로 break시켜야함
+                        }
                     }
-                }else break;
+                }
             }
             time++;
-            if(time == N){
-                result++;
-                time = 0;
+        }
+
+        return time;
+    }
+    static int upperBound(int target){
+        int start = 0;
+        int end = boxes.size();
+        while(start < end){
+            int mid = (start + end) / 2;
+            if(boxes.get(mid) <= target){
+                start = mid + 1;
+            }else{
+                end = mid;
             }
         }
-        if(list.get(N - 1) > 0) result += list.get(N - 1);
-        return result;
+        return end;
     }
 }
