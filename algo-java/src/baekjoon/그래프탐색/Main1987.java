@@ -3,8 +3,7 @@ package baekjoon.그래프탐색;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class Main1987 {
@@ -14,6 +13,8 @@ public class Main1987 {
     static final int ASCII = 65;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, -1, 0, 1};
+    static Stack<Character> stack = new Stack<>();
+    static int max = -1;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -23,50 +24,32 @@ public class Main1987 {
         C = Integer.parseInt(st.nextToken());
         board = new char[R][C];
 
-        //input
-        for(int i = 0; i < R; i++){
+        for (int i = 0; i < R; i++) {
             String str = br.readLine();
-            for(int j = 0; j < C; j++){
+            for (int j = 0; j < C; j++) {
                 board[i][j] = str.charAt(j);
             }
         }
-        System.out.println((int)'2');
 
-        System.out.println("bfs(0, 0) = " + bfs(0, 0));
-
-        for(int i = 0; i < R; i++){
-            for(int j = 0; j < C; j++){
-                System.out.print(board[i][j] + " ");
-            }
-            System.out.println();
-        }
-
+        dfs(0, 0, 0);
+        System.out.println(max + 1);
     }
-    static int bfs(int x, int y){
-        Queue<int[]> q = new LinkedList<>();
-        q.offer(new int[]{x, y});
+    static void dfs(int x, int y, int count){
+        max = Math.max(max, count);
         visited[(int)board[x][y] - ASCII] = true;
-        board[x][y] = '1';
-        int max = -1;
+        stack.push(board[x][y]);
+        board[x][y] = (char)(Integer.parseInt(String.valueOf(count)) + 1 + 48);
 
-        while (!q.isEmpty()){
-            int[] poll = q.poll();
-            int cx = poll[0];
-            int cy = poll[1];
-            for(int i = 0; i < 4; i++){
-                int nextX = cx + dx[i];
-                int nextY = cy + dy[i];
-                if(nextX < 0 || nextX >= R || nextY < 0 || nextY >= C) continue;
-                if((int)board[nextX][nextY] < (int)'A' || (int)'Z' < (int)board[nextX][nextY]) continue; // 대문자 알파벳이 아닐경우
-                if(visited[(int)board[nextX][nextY] - ASCII]) continue; // 이미 방문한 대문자 알파벳일경우
+        for(int i = 0; i < 4; i++){
+            int nextX = x + dx[i];
+            int nextY = y + dy[i];
+            if(nextX < 0 || nextX >= R || nextY < 0 || nextY >= C) continue;
+            if((int)board[nextX][nextY] < (int)'A' || (int)'Z' < (int)board[nextX][nextY]) continue; // 대문자 알파벳이 아닐경우
+            if(visited[(int)board[nextX][nextY] - ASCII]) continue; // 이미 방문한 대문자 알파벳일경우
 
-                q.offer(new int[]{nextX, nextY});
-                board[nextX][nextY] = (char)(Integer.parseInt(String.valueOf(board[cx][cy])) + 1 + 48);
-                max = Math.max(max, Integer.parseInt(String.valueOf(board[nextX][nextY])));
-            }
-            visited[(int)board[nextX][nextY] - ASCII] = true;
+            dfs(nextX, nextY, count + 1);
         }
-        return max;
+        board[x][y] = stack.pop(); //원상복귀
+        visited[(int)board[x][y] - ASCII] = false;
     }
-
 }
