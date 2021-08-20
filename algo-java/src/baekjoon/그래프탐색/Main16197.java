@@ -7,11 +7,14 @@ import java.util.*;
 
 public class Main16197 {
     static int N, M;
-    static int[][] board;
-    static List<Integer> coinPos = new ArrayList<>(); //동전의 위치
+    static int[][] boardA;
+    static boolean[][] visitedA;
+    static int[][] boardB;
+    static boolean[][] visitedB;
+    static List<Integer> coinPos = new ArrayList<>(); // 현재 동전의 위치
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, -1, 0, 1};
-    static int max = -1;
+    static int min = 10000000;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,70 +22,139 @@ public class Main16197 {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        board = new int[N][M];
+        boardA = new int[N][M];
+        boardB = new int[N][M];
+        visitedA = new boolean[N][M];
+        visitedB = new boolean[N][M];
+
         for(int i = 0; i < N; i++){
             String str = br.readLine();
             for(int j = 0; j < M; j++){
-                if(str.charAt(j) == '.') board[i][j] = 0; //빈칸
+                if(str.charAt(j) == '.') {
+                    boardA[i][j] = 0; //빈칸
+                    boardB[i][j] = 0;
+                }
                 else if(str.charAt(j) == 'o') {
-                    board[i][j] = 1; //동전
                     coinPos.add(i);
                     coinPos.add(j);
                 }
-                else board[i][j] = -1; //벽
+                else {
+                    boardA[i][j] = -1; //벽
+                    boardB[i][j] = -1;
+                }
             }
         }
 
-        bfs(coinPos.get(0), coinPos.get(1), coinPos.get(2), coinPos.get(3), 0);
+        boardA[coinPos.get(0)][coinPos.get(1)] = 1; //동전
+        boardB[coinPos.get(2)][coinPos.get(3)] = 1;
 
-        if(max > 10)
+        bfs(coinPos.get(0), coinPos.get(1), coinPos.get(2), coinPos.get(3));
+
+
+        if(min == 10000000)
             System.out.println(-1);
-        else System.out.println(max);
+        else
+            System.out.println(min);
     }
-    static void bfs(int ax, int ay, int bx, int by, int count){
-        Queue<int[]> q = new LinkedList<>();
-        q.offer(new int[]{ax, ay});
-        board[ax][ay] = -2;
-        q.offer(new int[]{bx, by});
-        board[bx][by] = -3;
+    static void bfs(int ax, int ay, int bx, int by){
+        Queue<TwoCoin> q = new LinkedList<>();
+        q.offer(new TwoCoin(ax, ay, bx, by));
+        visitedA[ax][ay] = true;
+        visitedB[bx][by] = true;
 
         while(!q.isEmpty()){
-            int[] poll = q.poll();
-            int cax = poll[0];
-            int cay = poll[1];
-
-            int[] poll1 = q.poll();
-            int cbx = poll1[0];
-            int cby = poll1[1];
+            TwoCoin coin = q.poll();
+            int cax = coin.ax;
+            int cay = coin.ay;
+            int cbx = coin.bx;
+            int cby = coin.by;
+            if(boardB[cbx][cby] > 10 || boardA[cax][cay] > 10) {
+                min = -1;
+                return;
+            }
 
             for(int i = 0; i < 4; i++){
-                boolean one = false;
-                boolean two = false;
-                int jumCnt = 0;
+                boolean isAOut = false;
+                boolean isBOut = false;
+                //동전 A
                 int nextAx = cax + dx[i];
                 int nextAy = cay + dy[i];
+
+                //동전 B
                 int nextBx = cbx + dx[i];
                 int nextBy = cby + dy[i];
-                if(nextAx < 0 || nextAx >= N || nextAy < 0 || nextAy >= M) {
-                    jumCnt++;
-                    one = true;
+
+                if(nextAx < 0 || nextAx >= N || nextAy < 0 || nextAy >= M){
+                    //A동전이 밖에나갈때
+                    isAOut = true;
                 }
-                if(nextBx < 0 || nextBx >= N || nextBy < 0 || nextBy >= M) {
-                    jumCnt++;
-                    two = true;
+                if(nextBx < 0 || nextBx >= N || nextBy < 0 || nextBy >= M){
+                    //B동전이 밖에 나갈 때
+                    isBOut = true;
                 }
-                if(jumCnt == 1){
-                    max = Math.max(max, count);
+                if(isAOut && isBOut){
+                    continue;
+                } else if(isAOut && !isBOut){
+                    min = Math.min(min, boardA[cax][cay]);
+                    return;
+                } else if(!isAOut && isBOut){
+                    min = Math.min(min, boardB[cbx][cby]);
+                    return;
+                } else{
+                    boolean isAWall = false;
+                    boolean isBWall = false;
+                    if(boardA[nextAx][nextAy] > 0 ) continue;
+                    if(boardA[nextAx][nextAy] == -1) isAWall = true;
+                    if(boardB[nextBx][nextBy] == -1) isBWall = true;
+                    if(isAWall && isBWall) continue;
+                    else if(isAWall && !isBWall){
+                        boardB[nextBx][nextBy] = boardB[cbx][cby] + 1;
+                        q.offer(new TwoCoin(cax, cay, nextBx, nextBy));
+                    }else if(!isAWall && isBWall){
+                        boardA[nextAx][nextAy] = boardA[cax][cay] + 1;
+                        q.offer(new TwoCoin(nextAx, nextAy, cbx, cby));
+                    }else{
+                        boardA[nextAx][nextAy] = boardA[cax][cay] + 1;
+                        boardB[nextBx][nextBy] = boardB[cbx][cby] + 1;
+                        q.offer(new TwoCoin(nextAx, nextAy, nextBx, nextBy));
+                    }
                 }
-                if(!one && board[nextAx][nextAy] != -1 && board[nextAx][nextAy] != -2) {
-                    q.offer(new int[]{nextAx, nextAy});
-                    board[nextAx][nextAy] = -2;
-                }
-                if(!two && board[nextBx][nextBy] != -1 && board[nextBx][nextBy] != -3) {
-                    q.offer(new int[]{nextBx, nextBy});
-                    board[nextBx][nextBy] = -3;
-                }
+
+                display();
             }
         }
+    }
+    static void display(){
+        System.out.println("//==AA==//");
+        for(int i = 0; i < N; i++){
+            for(int j = 0 ;j < M; j++){
+                System.out.print(boardA[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("//==BB==//");
+        for(int i = 0; i < N; i++){
+            for(int j = 0 ;j < M; j++){
+                System.out.print(boardB[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
+    }
+}
+
+
+class TwoCoin{
+    int ax;
+    int ay;
+    int bx;
+    int by;
+
+    TwoCoin(int ax, int ay, int bx, int by){
+        this.ax = ax;
+        this.ay = ay;
+        this.bx = bx;
+        this.by = by;
     }
 }
