@@ -89,8 +89,8 @@ public class Main16197_2 {
                     boolean isWallA = false;
                     boolean isWallB = false;
 
-                    if(board1[nextAx][nextAy] == -1 || board1[nextAx][nextAy] > 0) isWallA = true;
-                    if(board2[nextBx][nextBy] == -1 || board2[nextBx][nextBy] > 0) isWallB = true;
+                    if(board1[nextAx][nextAy] == -1) isWallA = true;
+                    if(board2[nextBx][nextBy] == -1) isWallB = true;
                     if(isWallA && isWallB){
                         //둘다 벽을 만남
                       continue;
@@ -114,11 +114,14 @@ public class Main16197_2 {
                 }else{
                     //둘중 하나만 떨어짐
                     if(aout){
-                        System.out.println("aout : " + board2[nextBx][nextBy]);
+                        System.out.println("cax = " + cax);
+                        System.out.println("cay = " + cay);
+                        System.out.println("aout : " + board1[cax][cay]);
                     }else{
-                        System.out.println("bout : " + board1[nextAx][nextAy]);
+                        System.out.println("cbx = " + cbx);
+                        System.out.println("cby = " + cby);
+                        System.out.println("bout : " + board2[cbx][cby]);
                     }
-                    display();
 
 //                    System.out.println("cax = " + cax);
 //                    System.out.println("cay = " + cay);
