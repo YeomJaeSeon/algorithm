@@ -62,20 +62,25 @@ public class Main2879 {
             }
             before = after;
         }
-
         for (List<Integer> integers : group) {
             if(integers.size() == 0) break;
-            Collections.sort(integers);
             int sum = integers.stream().mapToInt(Integer::intValue).sum();
             while(sum != 0){
+                int startIdx = 0;
                 for(int i = 0; i < integers.size(); i++){
+                    if(integers.get(i) != 0) {
+                        startIdx = i;
+                        break;
+                    }
+                }
+                for(int i = startIdx; i < integers.size(); i++){
                     if(integers.get(i) != 0){
                         if(integers.get(i) > 0){
                             integers.set(i, integers.get(i) - 1);
                         }else{
                             integers.set(i, integers.get(i) + 1);
                         }
-                    }
+                    }else break;
                 }
                 sum = integers.stream().mapToInt(Integer::intValue).sum();
                 count++;
