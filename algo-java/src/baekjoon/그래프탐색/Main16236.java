@@ -31,13 +31,16 @@ public class Main16236 {
                 if(num == 9){
                     sharkX = i;
                     sharkY = j;
-                }else if(num == 0){}
+                }else if(num == 0){
+                    board[i][j] = num;
+                }
                 else{
                     fishCount++;
+                    board[i][j] = num;
                 }
-                board[i][j] = num;
             }
         }
+
         if(fishCount == 0){
             System.out.println(0);
         }else{
@@ -49,7 +52,7 @@ public class Main16236 {
     static int bfs(){
         Queue<Shark> q = new LinkedList<>();
         q.offer(new Shark(sharkX, sharkY, 0, 0, 2));
-        visited[sharkY][sharkY] = true;
+        visited[sharkX][sharkY] = true;
         int totalMoveCount = 0;
 
         while(!q.isEmpty()){
@@ -62,7 +65,8 @@ public class Main16236 {
                 if(nextX < 0 || nextX >= N || nextY < 0 || nextY >= N) continue;
                 if(board[nextX][nextY] > current.size) continue;
                 if(!visited[nextX][nextY] && board[nextX][nextY] != 0 && board[nextX][nextY] < current.size){
-                    //요기 고민좀해보자
+                    System.out.println("먹었다");
+                    System.out.println("nextX : " + nextX + " nextY : " + nextY);
                     q.clear();
                     fishCount--;
                     totalMoveCount += (current.moveCount + 1);
@@ -72,6 +76,12 @@ public class Main16236 {
                         q.offer(new Shark(nextX, nextY, 0, current.eatCount + 1, current.size));
                     }
                     initVisited();
+                    visited[nextX][nextY] = true;
+                    board[nextX][nextY] = 0;
+                    break;
+                }
+                if(!visited[nextX][nextY] && board[nextX][nextY] == current.size){
+                    q.offer(new Shark(nextX, nextY, current.moveCount + 1, current.eatCount, current.size));
                     visited[nextX][nextY] = true;
                     continue;
                 }
@@ -90,7 +100,7 @@ public class Main16236 {
         }
     }
 }
-class Shark{
+class Shark implements Comparable<Shark>{
     int x;
     int y;
     int moveCount;
@@ -104,4 +114,16 @@ class Shark{
         this.eatCount = eatCount;
         this.size = size;
     }
+
+    @Override
+    public int compareTo(Shark o) {
+        if(y != o.y){
+            return y - o.y;
+        }else{
+            return x - o.x;
+        }
+    }
 }
+
+// 예제 4번 자꾸틀림
+// 잡을수있는 물고기중 가장 위, 왼쪽에있는 물고기를 잡을해보자.
