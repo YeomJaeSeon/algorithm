@@ -48,7 +48,7 @@ public class Main1932 {
             }
         }
 
-        
+
         System.out.println(Collections.max(dp.get(N - 1)));
 
     }
