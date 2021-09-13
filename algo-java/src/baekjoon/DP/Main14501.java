@@ -45,7 +45,7 @@ public class Main14501 {
             list.add(new Customer(t, p, i + 1));
         }
 
-        dp[1] = list.stream().filter(i -> i.d == 1).mapToInt(i -> i.p);
+//        dp[1] = list.stream().filter(i -> i.d == 1).mapToInt(i -> i.p);
 
         System.out.println(list);
 
