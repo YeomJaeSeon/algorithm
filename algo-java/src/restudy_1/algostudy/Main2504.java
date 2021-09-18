@@ -14,62 +14,79 @@ public class Main2504 {
         if(!isRight()){
             System.out.println(0);
         }else{
+            //옳은 괄호열임 - 계산해야한다.
             Stack<String> stack = new Stack<>();
             for(int i = 0; i < str.length(); i++){
                 if(stack.isEmpty()){
                     stack.push(str.charAt(i) + "");
+                    continue;
+                }
+                if(stack.peek().equals("(")){
+                    if(str.charAt(i) == ')'){
+                        stack.pop();
+                        stack.push("2");
+                    }else{
+                        stack.push(str.charAt(i)+ "");
+                    }
+                }else if(stack.peek().equals("[")){
+                    if(str.charAt(i) == ']'){
+                        stack.pop();
+                        stack.push("3");
+                    }else{
+                        stack.push(str.charAt(i) + "");
+
+                    }
                 }else{
-                    if(stack.peek().equals("(")){
-                        if(str.charAt(i) == ')'){
+                    //스택 맨위에 문자가 숫자일경우
+
+                    if(str.charAt(i) == ']'){
+                        int pop = Integer.parseInt(stack.pop());
+                        if(isNumber(stack.peek())){
+                            //숫자면
+                            int number = Integer.parseInt(stack.pop());
                             stack.pop();
-                            if(!stack.isEmpty() && (stack.peek().equals("(") || stack.peek().equals("["))){
-                                stack.push("2");
-                            }else{
-                                stack.push(2 + Integer.parseInt(stack.pop()) + "");
-                            }
+                            stack.push(3 * (number + pop) + "");
                         }else{
-                            stack.push(str.charAt(i) +"");
+                            //괄호면
+                            stack.pop();
+                            stack.push(pop * 3 + "");
                         }
-                    }else if(stack.peek().equals("[")){
-                        if(str.charAt(i) == ']'){
+                    }else if(str.charAt(i) == ')'){
+                        int pop = Integer.parseInt(stack.pop());
+                        if(isNumber(stack.peek())){
+                            //숫자면
+                            int number = Integer.parseInt(stack.pop());
                             stack.pop();
-                            if(!stack.isEmpty() && (stack.peek().equals("(") || stack.peek().equals("["))){
-                                stack.push("3");
-                            }else{
-                                stack.push(3 + Integer.parseInt(stack.pop()) + "");
-                            }
+                            stack.push(2 * (number + pop) + "");
                         }else{
-                            stack.push(str.charAt(i) + "");
+                            //괄호면
+                            stack.pop();
+                            stack.push(pop * 2 + "");
                         }
                     }else{
-                        //stack.peek() 이 숫자일때,
-                        if(str.charAt(i) == ')'){
-                            int num = Integer.parseInt(stack.pop());
-                            stack.pop();
-                            if(!stack.isEmpty() && (stack.peek().equals("(") || stack.peek().equals("["))){
-                                stack.push(num * 2 + "");
-                            }else{
-                                num = Integer.parseInt(stack.pop()) + num * 2;
-                                stack.push(num + "");
-                            }
-                        }else if(str.charAt(i) == ']'){
-                            int num = Integer.parseInt(stack.pop());
-                            stack.pop();
-                            if(!stack.isEmpty() && (stack.peek().equals("(") || stack.peek().equals("["))){
-                                stack.push(num * 3 + "");
-                            }else{
-                                num = Integer.parseInt(stack.pop()) + num * 3;
-                                stack.push(num + "");
-                            }
+                        int pop = Integer.parseInt(stack.pop());
+                        if(!stack.isEmpty() && isNumber(stack.peek())){
+                            int number = Integer.parseInt(stack.pop());
+                            stack.push(number + pop + "");
                         }else{
-                            stack.push(str.charAt(i) + "");
+                            stack.push(pop + "");
                         }
+
+                        stack.push(str.charAt(i) + "");
                     }
                 }
             }
-            System.out.println(stack);
+            System.out.println(stack.stream().mapToInt(Integer::parseInt).sum());
         }
 
+    }
+    static boolean isNumber(String str){
+        try{
+            Integer.parseInt(str);
+            return true;
+        }catch (NumberFormatException exception){
+            return false;
+        }
     }
     static boolean isRight(){
         Stack<Character> stack = new Stack<>();
