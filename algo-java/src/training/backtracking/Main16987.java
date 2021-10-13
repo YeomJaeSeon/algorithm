@@ -9,7 +9,6 @@ public class Main16987 {
     static int N;
     static Egg[] eggs;
     static int max = 0;
-    static boolean[] visited;
 
 
     public static void main(String[] args) throws IOException {
@@ -17,7 +16,6 @@ public class Main16987 {
         N = Integer.parseInt(br.readLine());
 
         eggs = new Egg[N];
-        visited = new boolean[N];
 
         for(int i = 0; i < N; i++){
             StringTokenizer st = new StringTokenizer(br.readLine(), " ");
@@ -30,7 +28,7 @@ public class Main16987 {
     }
     static void play(int grabPosition){
         if(grabPosition == N){
-            // 오른쪽 끝 계란을 잡고 치면 끝
+            // 맨 오른쪽 끝 계란을 잡고 치면 끝
             max = Math.max(max, countBrokenEggs());
             return;
         }
