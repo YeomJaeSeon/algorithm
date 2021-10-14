@@ -16,43 +16,29 @@ public class Main14712 {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        board = new int[N][M];
+        board = new int[N + 1][M + 1];
 
-        for(int i = 1; i <= N * M; i++){
-            recursive(0, i, 0);
-        }
-
-        count++; //격자판 위에 넴모가 아무것도 없을경우체크해줌.
+        recursive(0);
 
         System.out.println(count);
     }
-    static void recursive(int m, int maxCnt, int start){
-        if(m == maxCnt){
-            if(!isExisteNeMo()) count++;
-
+    static void recursive(int m){
+        if(m == N * M){
+            count++;
             return;
         }
+        int x = m / M + 1;
+        int y = m % M + 1;
 
-        for(int i = start; i < N * M; i++){
-            board[i / M][i % M] = 1; //네모 넣기
-            recursive(m + 1, maxCnt,  i + 1);
-            board[i / M][i % M] = 0; //네모 없애기(원복)
+        if(board[x - 1][y] == 1 && board[x][y - 1] == 1 && board[x - 1][y - 1] == 1)
+            recursive(m + 1);
+        else{
+            recursive(m + 1);
+            board[x][y] = 1;
+            recursive(m + 1);
+            board[x][y] = 0;
         }
     }
-    static boolean isExisteNeMo(){
-        if(N >= 2 && M >= 2){
-            for(int i = 0; i < N - 1; i++){
-                for(int j = 0; j < M - 1; j++){
-                    if(board[i][j] == 1 &&
-                            board[i + 1][j] == 1 &&
-                            board[i][j + 1] == 1 &&
-                            board[i + 1][j + 1] == 1)
-                        return true;
-                }
-            }
-            return false;
-        }else{
-            return false; //네모 존재 불가
-        }
-    }
+    
+
 }
