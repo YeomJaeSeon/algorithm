@@ -54,16 +54,16 @@ public class Main18430 {
         recursive(0, 0, 0);
 
 
+        System.out.println(max);
 
     }
     static void recursive(int m, int start, int sum){
         if(m == (N - 1) * (M - 1)){
-            System.out.println("sum = " + sum);
-
+            max = Math.max(max, sum);
             return;
         }
 
-        for(int i = start; i < (N - 1) * (M - 1); i++){
+        for(int i = 0; i < (N - 1) * (M - 1); i++){
             int standardX = i / (M - 1);
             int standardY = i % (M - 1);
 
@@ -95,7 +95,8 @@ public class Main18430 {
                     visited[shapedX2][shapedY2] = false;
                     visited[shapedX3][shapedY3] = false;
                 }else if(j == 3){
-                    recursive(m + 1, i + 1, sum);
+                    recursive(m + 1, i + 1,
+                            sum);
                 }
             }
         }
