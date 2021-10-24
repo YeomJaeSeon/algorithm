@@ -22,9 +22,6 @@ public class Main9663_re {
         if(m == N){
             count++;
 
-            System.out.println();
-            print();
-            System.out.println();
             return;
         }
 
