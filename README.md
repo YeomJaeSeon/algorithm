@@ -1,4 +1,5 @@
 # 알고리즘 부시기
+## 티어
 <img src="http://mazassumnida.wtf/api/v2/generate_badge?boj=yjs3819">
 
 
