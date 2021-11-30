@@ -2,7 +2,6 @@
 ## 티어
 <img src="http://mazassumnida.wtf/api/v2/generate_badge?boj=yjs3819">
 
-
 ## 사용언어
 - JAVA (main)
 - Python (sub)
@@ -37,3 +36,7 @@
 - [BS]()
 - [recursive]()
 - [트리]()
+
+## 공용 스터디 레포
+[Algorithm Study](https://github.com/Algorithm-Passport/AlgorithmStudy)
+(<- 링크의 레포와는 별개로 현재 이 레포는 **'염재선'개인 스터디 레포**입니다.)
