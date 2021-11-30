@@ -24,6 +24,7 @@ public class Main9342 {
     }
     static boolean checkString(String str){
         if(str.length() < 3) return false;
+        System.out.println("str = " + str);
 
         // == 스택을 이용해 문자열을 축약하는 과정 == //
         Stack<Character> stack = new Stack<>();
@@ -34,6 +35,8 @@ public class Main9342 {
             }
             stack.push(str.charAt(i));
         }
+
+        System.out.println("stack = " + stack);
         StringBuilder sb = new StringBuilder();
         for (Character ch : stack) {
           sb.append(ch);
