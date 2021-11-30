@@ -1,4 +1,6 @@
 # 알고리즘 부시기
+<img src="http://mazassumnida.wtf/api/v2/generate_badge?boj=yjs3819">
+
 
 ## 사용언어
 - JAVA (main)
