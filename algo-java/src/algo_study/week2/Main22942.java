@@ -1,4 +1,4 @@
-package baekjoon.자료구조;
+package algo_study.week2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
