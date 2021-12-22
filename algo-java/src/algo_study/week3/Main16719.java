@@ -14,6 +14,7 @@ import java.util.List;
  * ..
  * 문자열 길이 N개중 사전순으로 가장 앞에오는거 출력
  */
+
 public class Main16719 {
     static String str;
     static boolean[] visited;
